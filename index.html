@@ -5,7 +5,7 @@
     <title>نظام حجز الكتب المدرسية</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
-       :root {
+        :root {
             --primary-color: #2A3950;
             --secondary-color: #4A90E2;
             --accent-color: #FF6B6B;
@@ -17,7 +17,6 @@
             font-family: 'Tajawal', sans-serif;
             padding: 20px;
             background-color: var(--background-color);
-            transition: background 0.3s ease;
         }
 
         .header-info {
@@ -28,12 +27,6 @@
             border-radius: 15px;
             color: white;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transform: translateY(0);
-            transition: transform 0.3s ease;
-        }
-
-        .header-info:hover {
-            transform: translateY(-3px);
         }
 
         .library-name {
@@ -56,13 +49,6 @@
             border: 2px solid var(--secondary-color);
             border-radius: 8px;
             font-size: 16px;
-            transition: all 0.3s ease;
-        }
-
-        #customerName:focus {
-            outline: none;
-            box-shadow: 0 0 10px rgba(74, 144, 226, 0.3);
-            transform: scale(1.02);
         }
 
         .grade-section {
@@ -71,12 +57,6 @@
             padding: 20px;
             margin: 25px 0;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-        }
-
-        .grade-section:hover {
-            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
-            transform: translateY(-2px);
         }
 
         .grade-title {
@@ -96,21 +76,13 @@
             align-items: center;
             gap: 15px;
             cursor: pointer;
-            transition: all 0.2s ease;
             border: 2px solid transparent;
-        }
-
-        .book-item:hover {
-            background: #f8faff;
-            transform: translateX(10px);
-            border-color: var(--secondary-color);
         }
 
         .book-item label {
             display: flex;
             align-items: center;
             gap: 12px;
-            cursor: pointer;
             width: 100%;
         }
 
@@ -118,12 +90,6 @@
             width: 20px;
             height: 20px;
             accent-color: var(--secondary-color);
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        input[type="checkbox"]:checked {
-            transform: scale(1.1);
         }
 
         #selectedBooks {
@@ -134,16 +100,36 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
 
-        #totalPrice {
-            font-size: 26px;
-            color: var(--primary-color);
-            margin: 30px 0;
-            padding: 20px;
+        .price-fields {
+            display: grid;
+            gap: 15px;
+            margin: 20px 0;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .price-field {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             background: white;
-            border-radius: 12px;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .price-field input {
+            width: 150px;
+            padding: 10px;
+            border: 2px solid var(--secondary-color);
+            border-radius: 6px;
+            direction: ltr;
+        }
+
+        .price-field label {
             font-weight: bold;
-            text-align: center;
-            animation: pulse 1.5s infinite;
+            color: var(--primary-color);
         }
 
         #saveButton {
@@ -156,18 +142,6 @@
             margin: 30px auto;
             display: block;
             font-size: 18px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
-        }
-
-        #saveButton:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
-            letter-spacing: 1px;
-        }
-
-        #saveButton:active {
-            transform: translateY(1px);
         }
 
         .thank-you {
@@ -175,18 +149,6 @@
             color: var(--accent-color);
             margin: 40px 0;
             font-size: 18px;
-            opacity: 0;
-            animation: fadeIn 1s forwards 0.5s;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-            100% { transform: scale(1); }
-        }
-
-        @keyframes fadeIn {
-            to { opacity: 1; }
         }
 
         .selected-book {
@@ -195,12 +157,6 @@
             background: #f8faff;
             border-left: 4px solid var(--secondary-color);
             border-radius: 6px;
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(20px); }
-            to { opacity: 1; transform: translateX(0); }
         }
     </style>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
@@ -216,7 +172,20 @@
     <div id="visibleBooksContainer">
         <div id="gradesContainer"></div>
         <div id="selectedBooks"></div>
-        <div id="totalPrice"></div>
+        <div class="price-fields">
+            <div class="price-field">
+                <label>المجموع الكلي:</label>
+                <input type="text" id="totalInput" readonly>
+            </div>
+            <div class="price-field">
+                <label>قيمة الخصم:</label>
+                <input type="number" id="discountInput" placeholder="0">
+            </div>
+            <div class="price-field">
+                <label>المبلغ المتبقي:</label>
+                <input type="text" id="remainingAmount" readonly>
+            </div>
+        </div>
     </div>
     
     <div class="thank-you">شكرًا لثقتكم بنا - نتمنى لكم قراءة ممتعة</div>
@@ -224,93 +193,101 @@
     <button id="saveButton">🖨️ حفظ الفاتورة كصورة</button>
 
     <script>
-       const gradesData = [
+        const gradesData = [
             {
                 name: " الصف الاول الابتدائي",
                 books: [
-                    { name: "إسلامية", price: 3000 },
-                    { name: "قراءة", price: 2500 },
-                    { name: "انكليزي", price: 2800 },
+                    { name: "إسلامية", price: 2000 },
+                    { name: "قراءة", price: 3000 },
+                    { name: "انكليزي", price: 1000 },
+		    { name: "نشاط انكليزي", price: 1000 },
                     { name: "رياضيات", price: 3200 },
-                    { name: "علوم", price: 2700 },
+		    { name: "نشاط رياضيات", price: 2000 },
+                    { name: "علوم", price: 6500 },
+		    { name: "نشاط علوم", price: 2500 },
                     { name: "اخلاقيات", price: 2000 }
                 ]
             },
             {
                 name: "الصف الثاني الابتدائي",
                 books: [
-                    { name: "إسلامية", price: 3100 },
-                    { name: "قراءة", price: 2600 },
-                    { name: "انكليزي", price: 2900 },
-                    { name: "رياضيات", price: 3300 },
-                    { name: "علوم", price: 2800 }
+                    { name: "إسلامية", price: 2000 },
+                    { name: "قراءة", price: 3000 },
+                    { name: "انكليزي", price: 1000 },
+		    { name: "نشاط انكليزي", price: 1000 },
+                    { name: "رياضيات", price: 3200 },
+		    { name: "نشاط رياضيات", price: 2000 },
+                    { name: "علوم", price: 6500 },
+		    { name: "نشاط علوم", price: 2500 }
                 ]
             },
-			{
+            {
                 name: "الصف الثالث الابتدائي",
                 books: [
-                    { name: "إسلامية", price: 3100 },
-                    { name: "قراءة", price: 2600 },
-                    { name: "الانجليزي", price: 3300 },
-                    { name: "الرياضيات", price: 2900 },
-	  { name: "العلوم", price: 2900 },
-                    { name: "نشاط الانكليزي", price: 3300 },
-	  { name: "نشاط رياضيات", price: 2900 },
-                    { name: "نشاط العلوم", price: 2800 }
+                    { name: "إسلامية", price: 3000 },
+                    { name: "قراءة", price: 2500 },
+                    { name: "الانجليزي", price: 4000 },
+                    { name: "الرياضيات", price: 4500 },
+                    { name: "العلوم", price: 6000 },
+                    { name: "نشاط الانكليزي", price: 3000 },
+                    { name: "نشاط رياضيات", price: 3500 },
+                    { name: "نشاط العلوم", price: 3000 }
                 ]
             },
-			{
+            {
                 name: "الصف الرابع الابتدائي",
                 books: [
-                    { name: "إسلامية", price: 3100 },
-                    { name: "قراءة", price: 2600 },
-	  { name: "قواعد", price: 2600 },
-                    { name: "الانجليزي", price: 3300 },
-                    { name: "الرياضيات", price: 2900 },
-	  { name: "العلوم", price: 2900 },
-	  { name: "الاجتماعيات", price: 2900 },
-                    { name: "نشاط الانكليزي", price: 3300 },
-	  { name: "نشاط رياضيات", price: 2900 },
-                    { name: "نشاط العلوم", price: 2800 }
+                    { name: "إسلامية", price: 3500 },
+                    { name: "قراءة", price: 3000 },
+                    { name: "قواعد", price: 2500 },
+                    { name: "الانجليزي", price: 4500 },
+                    { name: "الرياضيات", price: 5000 },
+                    { name: "العلوم", price: 6000 },
+                    { name: "الاجتماعيات", price: 3500 },
+                    { name: "نشاط الانكليزي", price: 3000 },
+                    { name: "نشاط رياضيات", price: 3500 },
+                    { name: "نشاط العلوم", price: 3000 }
                 ]
             },
-	{
+            {
                 name: "الصف الخامس الابتدائي",
                 books: [
-                    { name: "إسلامية", price: 3100 },
-                    { name: "قراءة", price: 2600 },
-					{ name: "قواعد", price: 2600 },
-                    { name: "الانجليزي", price: 3300 },
-                    { name: "الرياضيات", price: 2900 },
-					{ name: "العلوم", price: 2900 },
-					{ name: "الاجتماعيات", price: 2900 },
-                    { name: "نشاط الانكليزي", price: 3300 },
-					{ name: "نشاط رياضيات", price: 2900 },
-                    { name: "نشاط العلوم", price: 2800 }
+                    { name: "إسلامية", price: 3500 },
+                    { name: "قراءة", price: 3000 },
+                    { name: "قواعد", price: 2500 },
+                    { name: "الانجليزي", price: 4500 },
+                    { name: "الرياضيات", price: 5000 },
+                    { name: "العلوم", price: 6000 },
+                    { name: "الاجتماعيات", price: 3500 },
+                    { name: "نشاط الانكليزي", price: 3000 },
+                    { name: "نشاط رياضيات", price: 3500 },
+                    { name: "نشاط العلوم", price: 3000 }
                 ]
             },
-						{
+            {
                 name: "الصف السادس الابتدائي",
                 books: [
-                    { name: "إسلامية", price: 3100 },
-					{ name: "قواعد", price: 2600 },
-                    { name: "الانجليزي", price: 3300 },
-                    { name: "الرياضيات", price: 2900 },
-					{ name: "العلوم", price: 2900 },
-					{ name: "الاجتماعيات", price: 2900 },
-                    { name: "نشاط الانكليزي", price: 3300 },
-					{ name: "نشاط رياضيات", price: 2900 },
-                    { name: "نشاط العلوم", price: 2800 }
+                    { name: "إسلامية", price: 3500 },
+                    { name: "قواعد", price: 2500 },
+                    { name: "الانجليزي", price: 4500 },
+                    { name: "الرياضيات", price: 5000 },
+                    { name: "العلوم", price: 6000 },
+                    { name: "الاجتماعيات", price: 3500 },
+                    { name: "نشاط الانكليزي", price: 3000 },
+                    { name: "نشاط رياضيات", price: 3500 },
+                    { name: "نشاط العلوم", price: 3000 }
                 ]
             },
-            // ... يمكنك إضافة بقية الصفوف بنفس الطريقة ...
         ];
+
         let total = 0;
+        let discount = 0;
+        let remainingAmount = 0;
         const selectedBooks = {};
 
         function createGradeSections() {
             const container = document.getElementById('gradesContainer');
-            container.innerHTML = ''; // تنظيف المحتوى القديم
+            container.innerHTML = '';
             
             gradesData.forEach(grade => {
                 const gradeDiv = document.createElement('div');
@@ -356,11 +333,19 @@
             }
             
             updateDisplay();
-        } // تم إصلاح القوس المفقود هنا
+        }
+
+        function updatePaymentFields() {
+            const totalInput = document.getElementById('totalInput');
+            const remainingAmountInput = document.getElementById('remainingAmount');
+            
+            totalInput.value = total.toLocaleString() + ' دينار';
+            remainingAmount = total - discount;
+            remainingAmountInput.value = remainingAmount.toLocaleString() + ' دينار';
+        }
 
         function updateDisplay() {
             const container = document.getElementById('selectedBooks');
-            const totalElement = document.getElementById('totalPrice');
             total = 0;
             
             container.innerHTML = '<h2 style="color: var(--primary-color); margin-bottom: 20px;">📚 الكتب المختارة:</h2>';
@@ -372,35 +357,22 @@
                 bookDiv.innerHTML = `
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <div>
-                            <span style="color: var(--secondary-color); font-size: 1.2em;">✓</span>
-                            <span style="font-weight: 600;">${grade}</span> - 
-                            <span style="color: var(--primary-color);">${book}</span>
+                            <span style="color: var(--secondary-color);">✓</span>
+                            <span>${grade} - ${book}</span>
                         </div>
-                        <span style="font-weight: bold; color: var(--accent-color);">
-                            ${price.toLocaleString()} دينار
-                        </span>
+                        <span>${price.toLocaleString()} دينار</span>
                     </div>
                 `;
                 container.appendChild(bookDiv);
                 total += price;
             });
             
-            totalElement.innerHTML = `
-                <div style="display: flex; justify-content: center; gap: 15px; align-items: center;">
-                    <span>💰 المجموع الكلي:</span>
-                    <span style="color: var(--accent-color); font-size: 1.3em;">
-                        ${total.toLocaleString()} دينار
-                    </span>
-                </div>
-            `;
-            totalElement.style.animation = 'none';
-            setTimeout(() => totalElement.style.animation = 'pulse 1.5s infinite', 10);
+            updatePaymentFields();
         }
 
         function saveAsImage() {
             const customerName = document.getElementById('customerName').value || 'غير محدد';
             
-            // إنشاء نسخة للطباعة
             const printDiv = document.createElement('div');
             printDiv.style.cssText = `
                 background: white;
@@ -411,32 +383,42 @@
                 font-family: 'Tajawal', sans-serif;
             `;
             
-            // محتوى الفاتورة
             printDiv.innerHTML = `
                 <div style="text-align: center; margin-bottom: 30px;">
-                    <h1 style="color: ${getComputedStyle(document.documentElement).getPropertyValue('--primary-color')};
-                             font-size: 32px; margin-bottom: 10px;">
+                    <h1 style="color: #2A3950; font-size: 32px; margin-bottom: 10px;">
                         مكتبة الصادق عليه السلام
                     </h1>
                     <p style="color: #666; font-size: 18px;">
-                        العنوان: النهروان - شارع الثقافة - بناية ١٢
+                        العنوان: النهروان - شارع 60- مقابل مكتب رياض غالي
                     </p>
                     <hr style="margin: 25px 0; border-color: #eee;">
-                    <h2 style="color: ${getComputedStyle(document.documentElement).getPropertyValue('--secondary-color')};
-                             font-size: 24px;">
+                    <h2 style="color: #4A90E2; font-size: 24px;">
                         اسم الزبون: ${customerName}
                     </h2>
                 </div>
                 
                 ${document.getElementById('selectedBooks').outerHTML}
-                ${document.getElementById('totalPrice').outerHTML}
                 
-                <div style="text-align: center; margin-top: 40px; color: #666; font-style: italic;">
+                <div style="margin: 20px auto; max-width: 400px;">
+                    <div style="display: flex; justify-content: space-between; padding: 10px;">
+                        <span>المجموع الكلي:</span>
+                        <span>${total.toLocaleString()} دينار</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 10px;">
+                        <span>قيمة الخصم:</span>
+                        <span>${discount.toLocaleString()} دينار</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 10px; font-weight: bold; color: #FF6B6B;">
+                        <span>المبلغ المتبقي:</span>
+                        <span>${remainingAmount.toLocaleString()} دينار</span>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 40px; color: #666;">
                     شكرًا لثقتكم بنا - نتمنى لكم قراءة ممتعة
                 </div>
             `;
 
-            // إخفاء العنصر المؤقت
             printDiv.style.position = 'fixed';
             printDiv.style.left = '-9999px';
             document.body.appendChild(printDiv);
@@ -444,13 +426,12 @@
             html2canvas(printDiv).then(canvas => {
                 const link = document.createElement('a');
                 link.download = 'فاتورة-الكتب.png';
-                link.href = canvas.toDataURL('image/png', 1.0);
+                link.href = canvas.toDataURL();
                 link.click();
                 document.body.removeChild(printDiv);
             });
         }
 
-        // تهيئة التطبيق
         document.addEventListener('DOMContentLoaded', () => {
             createGradeSections();
             
@@ -461,6 +442,11 @@
                     const price = this.dataset.price;
                     updateSelection(grade, book, price, this.checked);
                 });
+            });
+
+            document.getElementById('discountInput').addEventListener('input', function() {
+                discount = parseInt(this.value) || 0;
+                updatePaymentFields();
             });
 
             document.getElementById('saveButton').addEventListener('click', saveAsImage);
