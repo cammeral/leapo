@@ -12,11 +12,212 @@
             --background-color: #F8F9FA;
             --text-color: #2A2A2A;
         }
-
-        body {
+		
+ body {
+            margin: 0;
+            min-height: 100vh;
             font-family: 'Tajawal', sans-serif;
-            padding: 20px;
-            background-color: var(--background-color);
+            background: var(--background-gradient);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.5s ease;
+        }
+
+        /* واجهة الدخول المتطورة */
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            width: 90%;
+            max-width: 500px;
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.25);
+            transform: scale(1);
+            opacity: 1;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, 
+                rgba(74, 144, 226, 0.1), 
+                transparent);
+            transform: rotate(45deg);
+            animation: shine 6s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: rotate(45deg) translateX(-150%); }
+            100% { transform: rotate(45deg) translateX(150%); }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-title {
+            color: var(--primary-color);
+            font-size: 2.2em;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .login-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--secondary-color);
+            border-radius: 2px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 18px 25px 18px 55px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(5px);
+        }
+
+        .login-input:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 5px 20px rgba(74, 144, 226, 0.15);
+            padding-left: 60px;
+        }
+
+        .password-toggle {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .password-toggle:hover {
+            color: var(--secondary-color);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 18px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255,255,255,0.3),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .login-btn:hover::before {
+            left: 100%;
+        }
+
+        .login-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(74, 144, 226, 0.3);
+        }
+
+        .error-msg {
+            color: var(--accent-color);
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(255,107,107,0.1);
+            border-radius: 10px;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.4s ease;
+            display: block !important;
+        }
+
+        .error-msg.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .animated-text {
+            text-align: center;
+            margin-top: 25px;
+            color: var(--primary-color);
+            font-size: 0.9em;
+            animation: floatText 3s ease-in-out infinite;
+        }
+
+        @keyframes floatText {
+            0%, 100% { transform: translateY(0); opacity: 0.8; }
+            50% { transform: translateY(-8px); opacity: 1; }
+        }
+
+        /* بقية الأنماط للمحتوى الرئيسي */
+        .main-content {
+            display: none;
+            width: 100%;
+            max-width: 1200px;
+            padding: 30px;
+            animation: contentAppear 0.6s ease;
+        }
+
+        @keyframes contentAppear {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .header-info {
@@ -162,8 +363,41 @@
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 </head>
 <body>
+    <!-- واجهة الدخول المطوّرة -->
+    <div class="login-container">
+        <div class="login-header">
+            <h1 class="login-title">مرحبًا بك في مكتبة الصادق</h1>
+            <p style="color: #666; margin-top: 15px; font-size: 0.95em;">مكتبة الصادق (عليه السلام)</p>
+        </div>
+
+        <div class="login-form">
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" id="username" class="login-input" placeholder="اسم المستخدم">
+            </div>
+
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="password" class="login-input" placeholder="كلمة المرور">
+                <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+            </div>
+
+            <div id="loginError" class="error-msg">
+                <i class="fas fa-exclamation-circle"></i> بيانات الدخول غير صحيحة!
+            </div>
+
+            <button class="login-btn" onclick="login()">تسجيل الدخول</button>
+
+            <div class="animated-text">
+                نظام حجز الكتب المدرسية © 2024
+            </div>
+        </div>
+    </div>
+	
+	    <!-- المحتوى الرئيسي -->
+    <div class="main-content" id="mainContent">
     <div class="header-info">
-        <div class="library-name">مكتبة الصادق عليه السلام</div>
+        <div class="library-name">مكتبــة الصــادق </div>
         <div class="library-address">العنوان: النهروان - شارع 60- مقابل مكتب رياض غالي</div>
     </div>
 
@@ -193,6 +427,46 @@
     <button id="saveButton">🖨️ حفظ الفاتورة كصورة</button>
 
     <script>
+        // تفعيل إظهار/إخفاء كلمة المرور
+        const togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#password');
+
+        togglePassword.addEventListener('click', function () {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            this.classList.toggle('fa-eye-slash');
+        });
+
+        // بيانات الدخول
+        const validCredentials = {
+            username: "محمد",
+            password: "2485"
+        };
+
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorMsg = document.getElementById('loginError');
+
+            if(username === validCredentials.username && password === validCredentials.password) {
+                document.querySelector('.login-container').style.opacity = '0';
+                document.querySelector('.login-container').style.transform = 'scale(0.9)';
+                
+                setTimeout(() => {
+                    document.querySelector('.login-container').style.display = 'none';
+                    document.getElementById('mainContent').style.display = 'block';
+                    document.body.style.background = '#f8f9fa';
+                }, 500);
+            } else {
+                errorMsg.classList.add('show');
+                document.querySelector('.login-container').classList.add('error-animation');
+                setTimeout(() => {
+                    errorMsg.classList.remove('show');
+                    document.querySelector('.login-container').classList.remove('error-animation');
+                }, 3000);
+            }
+        }
+		
         const gradesData = [
             {
                 name: " الصف الاول الابتدائي",
@@ -200,11 +474,11 @@
                     { name: "إسلامية", price: 2000 },
                     { name: "قراءة", price: 3000 },
                     { name: "انكليزي", price: 1000 },
-		    { name: "نشاط انكليزي", price: 1000 },
-                    { name: "رياضيات", price: 3200 },
-		    { name: "نشاط رياضيات", price: 2000 },
+					{ name: "نشاط الانكليزي", price: 500 },
+                    { name: "رياضيات", price: 6000 },
+					{ name: "نشاط الرياضيات", price: 2000 },
                     { name: "علوم", price: 6500 },
-		    { name: "نشاط علوم", price: 2500 },
+					{ name: "نشاط العلوم", price: 2500 },
                     { name: "اخلاقيات", price: 2000 }
                 ]
             },
@@ -214,68 +488,69 @@
                     { name: "إسلامية", price: 2000 },
                     { name: "قراءة", price: 3000 },
                     { name: "انكليزي", price: 1000 },
-		    { name: "نشاط انكليزي", price: 1000 },
-                    { name: "رياضيات", price: 3200 },
-		    { name: "نشاط رياضيات", price: 2000 },
+					{ name: "نشاط الانكليزي", price: 500 },
+                    { name: "رياضيات", price: 6000 },
+					{ name: "نشاط الرياضيات", price: 2000 },
                     { name: "علوم", price: 6500 },
-		    { name: "نشاط علوم", price: 2500 }
+					{ name: "نشاط العلوم", price: 2500 }
                 ]
             },
             {
                 name: "الصف الثالث الابتدائي",
                 books: [
-                    { name: "إسلامية", price: 3000 },
-                    { name: "قراءة", price: 2500 },
-                    { name: "الانجليزي", price: 4000 },
-                    { name: "الرياضيات", price: 4500 },
-                    { name: "العلوم", price: 6000 },
-                    { name: "نشاط الانكليزي", price: 3000 },
-                    { name: "نشاط رياضيات", price: 3500 },
-                    { name: "نشاط العلوم", price: 3000 }
+                    { name: "إسلامية", price: 2000 },
+                    { name: "قراءة", price: 3000 },
+                    { name: "انكليزي", price: 1000 },
+					{ name: "نشاط الانكليزي", price: 500 },
+                    { name: "رياضيات", price: 6000 },
+					{ name: "نشاط الرياضيات", price: 2000 },
+                    { name: "علوم", price: 6500 },
+					{ name: "نشاط العلوم", price: 2500 }
                 ]
             },
             {
                 name: "الصف الرابع الابتدائي",
                 books: [
-                    { name: "إسلامية", price: 3500 },
+                    { name: "إسلامية", price: 2000 },
                     { name: "قراءة", price: 3000 },
-                    { name: "قواعد", price: 2500 },
-                    { name: "الانجليزي", price: 4500 },
-                    { name: "الرياضيات", price: 5000 },
-                    { name: "العلوم", price: 6000 },
-                    { name: "الاجتماعيات", price: 3500 },
-                    { name: "نشاط الانكليزي", price: 3000 },
-                    { name: "نشاط رياضيات", price: 3500 },
-                    { name: "نشاط العلوم", price: 3000 }
+					{ name: "القواعد", price: 3000 },
+                    { name: "انكليزي", price: 1000 },
+					{ name: "نشاط الانكليزي", price: 500 },
+                    { name: "رياضيات", price: 6000 },
+					{ name: "نشاط الرياضيات", price: 2000 },
+                    { name: "علوم", price: 6500 },
+					{ name: "نشاط العلوم", price: 2500 },
+                    { name: "الاجتماعيات", price: 2000 }
                 ]
             },
             {
                 name: "الصف الخامس الابتدائي",
                 books: [
-                    { name: "إسلامية", price: 3500 },
+                    { name: "إسلامية", price: 2000 },
                     { name: "قراءة", price: 3000 },
-                    { name: "قواعد", price: 2500 },
-                    { name: "الانجليزي", price: 4500 },
-                    { name: "الرياضيات", price: 5000 },
-                    { name: "العلوم", price: 6000 },
-                    { name: "الاجتماعيات", price: 3500 },
-                    { name: "نشاط الانكليزي", price: 3000 },
-                    { name: "نشاط رياضيات", price: 3500 },
-                    { name: "نشاط العلوم", price: 3000 }
+					{ name: "القواعد", price: 3000 },
+                    { name: "انكليزي", price: 1000 },
+					{ name: "نشاط الانكليزي", price: 500 },
+                    { name: "رياضيات", price: 6000 },
+					{ name: "نشاط الرياضيات", price: 2000 },
+                    { name: "علوم", price: 6500 },
+					{ name: "نشاط العلوم", price: 2500 },
+                    { name: "الاجتماعيات", price: 2000 }
                 ]
             },
             {
                 name: "الصف السادس الابتدائي",
                 books: [
-                    { name: "إسلامية", price: 3500 },
-                    { name: "قواعد", price: 2500 },
-                    { name: "الانجليزي", price: 4500 },
-                    { name: "الرياضيات", price: 5000 },
-                    { name: "العلوم", price: 6000 },
-                    { name: "الاجتماعيات", price: 3500 },
-                    { name: "نشاط الانكليزي", price: 3000 },
-                    { name: "نشاط رياضيات", price: 3500 },
-                    { name: "نشاط العلوم", price: 3000 }
+                    { name: "إسلامية", price: 2000 },
+                    { name: "قراءة", price: 3000 },
+					{ name: "القواعد", price: 3000 },
+                    { name: "انكليزي", price: 1000 },
+					{ name: "نشاط الانكليزي", price: 500 },
+                    { name: "رياضيات", price: 6000 },
+					{ name: "نشاط الرياضيات", price: 2000 },
+                    { name: "علوم", price: 6500 },
+					{ name: "نشاط العلوم", price: 2500 },
+                    { name: "الاجتماعيات", price: 2000 }
                 ]
             },
         ];
@@ -372,7 +647,12 @@
 
         function saveAsImage() {
             const customerName = document.getElementById('customerName').value || 'غير محدد';
-            
+                const cleanName = customerName
+        .replace(/[^a-z0-9آ-ی-]/gi, '_') // استبدال الرموز الخاصة ب _
+        .replace(/\s+/g, '_') // استبدال المسافات ب _
+        .substring(0, 50); // تحديد طول الاسم
+
+    const fileName = `_${cleanName}_${Date.now()}`;
             const printDiv = document.createElement('div');
             printDiv.style.cssText = `
                 background: white;
@@ -386,7 +666,7 @@
             printDiv.innerHTML = `
                 <div style="text-align: center; margin-bottom: 30px;">
                     <h1 style="color: #2A3950; font-size: 32px; margin-bottom: 10px;">
-                        مكتبة الصادق عليه السلام
+                        مكتبة الصادق 
                     </h1>
                     <p style="color: #666; font-size: 18px;">
                         العنوان: النهروان - شارع 60- مقابل مكتب رياض غالي
@@ -425,7 +705,7 @@
 
             html2canvas(printDiv).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'فاتورة-الكتب.png';
+                link.download = `${fileName}.png`; // هنا يتم تحديد اسم الملف
                 link.href = canvas.toDataURL();
                 link.click();
                 document.body.removeChild(printDiv);
